@@ -183,6 +183,7 @@
     <Compile Include="Controllers\GigsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataConfiguration\GigConfiguration.cs" />
     <Compile Include="Dtos\AttendanceDto.cs" />
     <Compile Include="Dtos\FollowingDto.cs" />
     <Compile Include="Global.asax.cs">
@@ -219,6 +220,10 @@
     <Compile Include="Migrations\201912042239566_AddFollowing.cs" />
     <Compile Include="Migrations\201912042239566_AddFollowing.Designer.cs">
       <DependentUpon>201912042239566_AddFollowing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912081251570_addTestModel.cs" />
+    <Compile Include="Migrations\201912081251570_addTestModel.Designer.cs">
+      <DependentUpon>201912081251570_addTestModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
@@ -301,6 +306,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Gigs\Create.cshtml" />
+    <Content Include="Views\Gigs\Mine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912042239566_AddFollowing.resx">
       <DependentUpon>201912042239566_AddFollowing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912081251570_addTestModel.resx">
+      <DependentUpon>201912081251570_addTestModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -37,6 +37,8 @@ namespace GigHub.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
+            //JsonConvert.DeserializeObject<MyClass>(my_json);
+
             return View();
         }
 
