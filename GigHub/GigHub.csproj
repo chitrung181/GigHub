@@ -178,8 +178,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AttendancesController.cs" />
-    <Compile Include="Controllers\FollowingsController.cs" />
+    <Compile Include="Controllers\Api\AttendancesController.cs" />
+    <Compile Include="Controllers\Api\FollowingsController.cs" />
+    <Compile Include="Controllers\Api\GigsController.cs" />
     <Compile Include="Controllers\GigsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -225,6 +226,10 @@
     <Compile Include="Migrations\201912081251570_addTestModel.Designer.cs">
       <DependentUpon>201912081251570_addTestModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001010241458_AddIsCancelToGig.cs" />
+    <Compile Include="Migrations\202001010241458_AddIsCancelToGig.Designer.cs">
+      <DependentUpon>202001010241458_AddIsCancelToGig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -258,6 +263,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -305,7 +311,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Gigs\Create.cshtml" />
+    <Content Include="Views\Gigs\GigForm.cshtml" />
     <Content Include="Views\Gigs\Mine.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912081251570_addTestModel.resx">
       <DependentUpon>201912081251570_addTestModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001010241458_AddIsCancelToGig.resx">
+      <DependentUpon>202001010241458_AddIsCancelToGig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

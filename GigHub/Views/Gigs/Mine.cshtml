@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GigHub.Models.Gig>
+﻿
+@model IEnumerable<GigHub.Models.Gig>
 @{
     ViewBag.Title = "Mine";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,7 +26,55 @@
                 <span class="genre">
                     @gig.Genre.Name
                 </span>
+                <div class="actions">
+                    <a href="@Url.Action("Edit", "Gigs", new {id = gig.Id})">
+                        Edit
+                    </a> | 
+                    <a href="#" class="js-cancel-gig" data-gig-id="@gig.Id">Cancel</a>
+                </div>
             </div>
         </li>
     }
 </ul>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $(".js-cancel-gig").click(function(e) {
+                var link = $(e.target);
+
+                bootbox.dialog({
+                    title: '<h4>Confirm</h4>',
+                    message: "<p>Are you sure you want to cancel this gig?</p>",
+                    size: 'medium',
+                    buttons: {
+                        No: {
+                            label: "No",
+                            className: 'btn-default',
+                            callback: function() {
+                                bootbox.hideAll();
+                            }
+                        },
+                        Yes: {
+                            label: "Yes",
+                            className: 'btn-danger',
+                            callback: function(){
+                                $.ajax({
+                                    url: "/api/gigs/" + link.attr("data-gig-id"),
+                                    method: "DELETE"
+                                }).done(function() {
+                                    link.parents("li").fadeOut(function() {
+                                        $(this).remove();
+                                    });
+                                }).fail(function() {
+                                    alert("Something failed");
+                                });
+                            }
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+}
