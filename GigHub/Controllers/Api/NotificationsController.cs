@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using GigHub.Core;
+﻿using GigHub.Core;
 using GigHub.Core.Dtos;
-using GigHub.Core.Models;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
@@ -25,7 +23,26 @@ namespace GigHub.Controllers.Api
             var userId = User.Identity.GetUserId();
             var notifications = _unitOfWork.Notifications.GetNewNotificationsFor(userId);
 
-            return notifications.Select(Mapper.Map<Notification, NotificationDto>);
+            return notifications.Select(n => new NotificationDto()
+            {
+                DateTime = n.DateTime,
+                Gig = new GigDto()
+                {
+
+                    Artist = new UserDto()
+                    {
+                        Id = n.Gig.Artist.Id,
+                        Name = n.Gig.Artist.Name
+                    },
+                    DateTime = n.Gig.DateTime,
+                    Id = n.Gig.Id,
+                    IsCancel = n.Gig.IsCancel,
+                    Venue = n.Gig.Venue
+                },
+                OriginalDateTime = n.OriginalDateTime,
+                OriginalVenue = n.OriginalVenue,
+                Type = n.Type
+            });
         }
 
         [HttpPost]

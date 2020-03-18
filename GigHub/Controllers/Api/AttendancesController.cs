@@ -1,19 +1,19 @@
-﻿using System.Linq;
-using System.Web.Http;
-using GigHub.Dtos;
-using GigHub.Models;
+﻿using GigHub.Core.Dtos;
+using GigHub.Core.Models;
 using Microsoft.AspNet.Identity;
+using System.Web.Http;
+using GigHub.Core;
 
 namespace GigHub.Controllers.Api
 {
     [Authorize]
     public class AttendancesController : ApiController
     {
-        private ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AttendancesController()
+        public AttendancesController(IUnitOfWork unitOfWork)
         {
-            _context = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -21,21 +21,35 @@ namespace GigHub.Controllers.Api
         {
             var userId = User.Identity.GetUserId();
 
-            //check if duplicate
-            if (_context.Attendances.Any(a => a.AttendeeId == userId && a.GigId == dto.GigId))
-                return BadRequest("The attendance already exists");
+            var attendance = _unitOfWork.Attendances.GetAttendance(dto.GigId, userId);
+            if (attendance != null)
+                return BadRequest("The attendance already exists.");
 
-            var attendance = new Attendance
+            attendance = new Attendance
             {
                 GigId = dto.GigId,
                 AttendeeId = userId
-
             };
-
-            _context.Attendances.Add(attendance);
-            _context.SaveChanges();
+            _unitOfWork.Attendances.Add(attendance);
+            _unitOfWork.Complete();
 
             return Ok();
+        }
+
+        [HttpDelete]
+        public IHttpActionResult DeleteAttendance(int id)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var attendance = _unitOfWork.Attendances.GetAttendance(id, userId);
+
+            if (attendance == null)
+                return NotFound();
+
+            _unitOfWork.Attendances.Remove(attendance);
+            _unitOfWork.Complete();
+
+            return Ok(id);
         }
     }
 }
